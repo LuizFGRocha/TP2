@@ -21,3 +21,16 @@ class reta {
     int a_m;
     int b_m;
 };
+
+/// @brief Calcula a norma n de um vetor de coordenadas iguais às
+/// do ponto passado.
+/// @param p O ponto cujas coordenadas serão utilizadas.
+/// @param n Determina qual norma será tomada.
+/// @return Retorna o double com o valor da normal calculado.
+double norma(ponto p, int n);
+
+/// @brief Calcula o ângulo entre dois pontos
+/// @param p O primeiro ponto
+/// @param q O segundo ponto
+/// @return Retorna o double correspondente ao ângulo
+double angulo(ponto p, ponto q);
