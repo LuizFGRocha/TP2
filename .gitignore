@@ -2,3 +2,4 @@ entrada.txt
 obj/*.o
 bin/*
 !*/.gitkeep
+/.vscode
