@@ -12,14 +12,25 @@
 struct excecao_metodo_de_ordenacao_invaido{};
 
 class fecho_convexo {
-    vetor<reta> retas_m;
+
+  public:
+
+    fecho_convexo() : pilha_m() {}
+
+    fecho_convexo(pilha<ponto>& pilha) {
+        pilha_m = pilha;
+    }
+
+  private:
+    pilha<ponto> pilha_m;
 };
 
 fecho_convexo varredura_de_graham(vetor<ponto> Q, int metodo_de_ordenacao) {
-    pilha<ponto> S;
 
+    // Passo 1 do pseudocódigo
     ponto p0 = extrai_y_minima(Q); // p0 é identificado e removido de Q
 
+    // Passo 2 do pseudocódigo
     vetor<par<ponto, double>> vetor_ponto_angulo; // Vetor de pares ponto-ângulo
     for (int i = 0; i < Q.size(); ++i)
         vetor_ponto_angulo.push_back(par<ponto, double>(Q[i], angulo(p0, Q[i])));
@@ -37,6 +48,35 @@ fecho_convexo varredura_de_graham(vetor<ponto> Q, int metodo_de_ordenacao) {
         default:
             throw excecao_metodo_de_ordenacao_invaido{};
     }
+
+    // Passo 3 do pseudocódigo
+    pilha<ponto> S;
+
+    // Passo 4 do pseudocódigo
+    S.empilha(p0);
+
+    // Passo 5 do pseudocódigo
+    S.empilha(vetor_ponto_angulo[1].primeiro());
+
+    // Passo 6 do pseudocódigo
+    if (vetor_ponto_angulo.size() >= 3)
+        S.empilha(vetor_ponto_angulo[2].primeiro());
+
+    // Passo 7 do pseudocódigo
+    for (int i = 3; i < vetor_ponto_angulo.size(); ++i) {
+
+        // Passo 8 do pseudocódigo
+        while (!vira_para_a_esquerda(S.espia(), S.espia_segundo()))
+            
+            // Passo 9 do psedocódigo
+            S.desempilha();
+
+        // Passo 10 do pseudocódigo
+        S.empilha(vetor_ponto_angulo[i].primeiro());
+    }
+
+    // Passo 11 do pseudocódigo
+    return S;
 }
 
 /// @brief Encontra o ponto com a menor coordenada y e remove esse
