@@ -34,3 +34,5 @@ double norma(ponto p, int n);
 /// @param q O segundo ponto
 /// @return Retorna o double correspondente ao ângulo
 double angulo(ponto p, ponto q);
+
+bool vira_para_a_esquerda(ponto p, ponto q);
