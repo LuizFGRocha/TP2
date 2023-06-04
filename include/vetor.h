@@ -21,6 +21,12 @@ class vetor {
         }
     };
 
+    /// @brief Construtor de cópia
+    /// @param vetor_entrada O construtor a ser copiado
+    vetor(const vetor<Tipo>& vetor_entrada) : vetor() {
+        operator=(vetor_entrada);
+    }
+
     /// @brief Aumenta o tamanho sem inicializar as novas posições.
     /// @param tamanho Novo tamanho.
     void set_size(int tamanho) {
@@ -62,7 +68,7 @@ class vetor {
     /// @brief Adiciona uma posição no final do vetor e coloca um elemento nela.
     /// Se necessário, a capacidade é aumentada.
     /// @param elemento O elemento a ser colocado
-    void push_back(Tipo elemento) {
+    vetor& push_back(Tipo elemento) {
 
         if (tamanho_m >= capacidade_m) {
 
@@ -83,6 +89,8 @@ class vetor {
         } else {
             vetor_m[tamanho_m++] = elemento;
         }
+
+        return *this;
     }
 
     /// @brief Remove a última posição do vetor e retorna o elemento que a ocupava.
@@ -116,10 +124,10 @@ class vetor {
     /// elementos posteriores um passo para trás.
     /// @param posicao Posição a ser removida, contada a partir de 0
     void remove(int posicao) {
-        if (tamanho() - 1 < posicao)
+        if (size() - 1 < posicao)
             throw excecao_posicao_invalida{};
 
-        for (int i = posicao; i < tamanho() - 2; ++i) {
+        for (int i = posicao; i < size() - 2; ++i) {
             (*this)[i] = (*this)[i + 1];
         } 
     }
@@ -136,9 +144,23 @@ class vetor {
         }
     }
 
+    /// @brief Copia os conteúdos de um vetor para outro
+    /// @param rhs O vetor cujos conteúdos serão copiados
+    /// @return Retorna uma referência para o vetor que recebe a cópia
+    vetor<Tipo>& operator=(const vetor<Tipo>& rhs) {
+        this->~vetor();
+        tamanho_m = 0;
+        capacidade_m = rhs.capacidade_m;
+        vetor_m = new Tipo[capacidade_m];
+        for (int i = 0; i < rhs.size(); ++i)
+            push_back(*(rhs.vetor_m + i));
+
+        return *this;
+    }
+
     /// @brief Dá o tamanho do vetor
     /// @return Retorna o inteiro correspondente ao tamanho
-    int size() {
+    int size() const {
         return tamanho_m;
     }
 
@@ -156,6 +178,7 @@ class vetor {
 
     ~vetor() {
         delete [] vetor_m;
+        vetor_m = nullptr;
     }
 
   private:
