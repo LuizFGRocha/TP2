@@ -33,7 +33,7 @@ fecho_convexo varredura_de_graham(vetor<ponto> Q, int metodo_de_ordenacao) {
     // Passo 2 do pseudocódigo
     vetor<par<ponto, double>> vetor_ponto_angulo; // Vetor de pares ponto-ângulo
     for (int i = 0; i < Q.size(); ++i)
-        vetor_ponto_angulo.push_back(par<ponto, double>(Q[i], angulo(p0, Q[i])));
+        vetor_ponto_angulo.push_back(par<ponto, double>(Q[i], angulo(Q[i], p0)));
 
     switch (metodo_de_ordenacao) {
         case 0:
@@ -66,7 +66,7 @@ fecho_convexo varredura_de_graham(vetor<ponto> Q, int metodo_de_ordenacao) {
     for (int i = 3; i < vetor_ponto_angulo.size(); ++i) {
 
         // Passo 8 do pseudocódigo
-        while (!vira_para_a_esquerda(S.espia(), S.espia_segundo()))
+        while (nao_vira_para_a_esquerda(S.espia(), S.espia_segundo()))
             
             // Passo 9 do psedocódigo
             S.desempilha();
