@@ -2,6 +2,10 @@
 class ponto {
   public:
 
+    ponto();
+
+    ponto(int x, int y);
+
     /// @brief Acessa a coordenada x
     /// @return Retorna uma referência para a coordenada x
     int& coordenada_x();
@@ -22,17 +26,10 @@ class reta {
     int b_m;
 };
 
-/// @brief Calcula a norma n de um vetor de coordenadas iguais às
-/// do ponto passado.
-/// @param p O ponto cujas coordenadas serão utilizadas.
-/// @param n Determina qual norma será tomada.
-/// @return Retorna o double com o valor da normal calculado.
-double norma(ponto p, int n);
-
 /// @brief Calcula o ângulo entre dois pontos
 /// @param p O primeiro ponto
 /// @param q O segundo ponto
 /// @return Retorna o double correspondente ao ângulo
 double angulo(ponto p, ponto q);
 
-bool vira_para_a_esquerda(ponto p, ponto q);
+bool nao_vira_para_a_esquerda(ponto p, ponto q);
