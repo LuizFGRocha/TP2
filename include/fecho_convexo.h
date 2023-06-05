@@ -4,6 +4,7 @@
 #include "par.h"
 #include "sorting.h"
 #include <cmath>
+#include <iostream>
 
 #define k_mergesort 0
 #define k_insertionsort 1
@@ -21,63 +22,16 @@ class fecho_convexo {
         pilha_m = pilha;
     }
 
+    void imprime_e_apaga() {
+        while (!pilha_m.vazia()) {
+            ponto atual = pilha_m.desempilha();
+            std::cout << "(" << atual.coordenada_x() << ", " << atual.coordenada_y() << ")" << std::endl;
+        }
+    }
+
   private:
     pilha<ponto> pilha_m;
 };
-
-fecho_convexo varredura_de_graham(vetor<ponto> Q, int metodo_de_ordenacao) {
-
-    // Passo 1 do pseudocódigo
-    ponto p0 = extrai_y_minima(Q); // p0 é identificado e removido de Q
-
-    // Passo 2 do pseudocódigo
-    vetor<par<ponto, double>> vetor_ponto_angulo; // Vetor de pares ponto-ângulo
-    for (int i = 0; i < Q.size(); ++i)
-        vetor_ponto_angulo.push_back(par<ponto, double>(Q[i], angulo(Q[i], p0)));
-
-    switch (metodo_de_ordenacao) {
-        case 0:
-            mergesort(vetor_ponto_angulo);
-            break;
-        case 1:
-            insertionsort(vetor_ponto_angulo);
-            break;
-        case 2:
-            linearsort(vetor_ponto_angulo);
-            break;
-        default:
-            throw excecao_metodo_de_ordenacao_invaido{};
-    }
-
-    // Passo 3 do pseudocódigo
-    pilha<ponto> S;
-
-    // Passo 4 do pseudocódigo
-    S.empilha(p0);
-
-    // Passo 5 do pseudocódigo
-    S.empilha(vetor_ponto_angulo[1].primeiro());
-
-    // Passo 6 do pseudocódigo
-    if (vetor_ponto_angulo.size() >= 3)
-        S.empilha(vetor_ponto_angulo[2].primeiro());
-
-    // Passo 7 do pseudocódigo
-    for (int i = 3; i < vetor_ponto_angulo.size(); ++i) {
-
-        // Passo 8 do pseudocódigo
-        while (nao_vira_para_a_esquerda(S.espia(), S.espia_segundo()))
-            
-            // Passo 9 do psedocódigo
-            S.desempilha();
-
-        // Passo 10 do pseudocódigo
-        S.empilha(vetor_ponto_angulo[i].primeiro());
-    }
-
-    // Passo 11 do pseudocódigo
-    return S;
-}
 
 /// @brief Encontra o ponto com a menor coordenada y e remove esse
 /// ponto do vetor.
@@ -98,4 +52,58 @@ ponto extrai_y_minima(vetor<ponto>& Q) {
     Q.remove(posicao_menor);
 
     return menor;
+}
+
+fecho_convexo varredura_de_graham(vetor<ponto> Q, int metodo_de_ordenacao) {
+
+    // Passo 1 do pseudocódigo
+    ponto p0 = extrai_y_minima(Q); // p0 é identificado e removido de Q
+
+    // Passo 2 do pseudocódigo
+    vetor<par<ponto, double>> vetor_ponto_angulo; // Vetor de pares ponto-ângulo
+    for (int i = 0; i < Q.size(); ++i)
+        vetor_ponto_angulo.push_back(par<ponto, double>(Q[i], angulo(Q[i], p0)));
+
+    switch (metodo_de_ordenacao) {
+        case 0:
+            mergesort(vetor_ponto_angulo);
+            break;
+        case 1:
+            insertionsort(vetor_ponto_angulo);
+            break;
+        /* case 2:
+            bucketsort(vetor_ponto_angulo);
+            break; */
+        default:
+            throw excecao_metodo_de_ordenacao_invaido{};
+    }
+
+    // Passo 3 do pseudocódigo
+    pilha<ponto> S;
+
+    // Passo 4 do pseudocódigo
+    S.empilha(p0);
+
+    // Passo 5 do pseudocódigo
+    S.empilha(vetor_ponto_angulo[0].primeiro());
+
+    // Passo 6 do pseudocódigo
+    if (vetor_ponto_angulo.size() >= 3)
+        S.empilha(vetor_ponto_angulo[1].primeiro());
+
+    // Passo 7 do pseudocódigo
+    for (int i = 3; i < vetor_ponto_angulo.size(); ++i) {
+
+        // Passo 8 do pseudocódigo
+        while (gira_sentido_horario(S.espia_segundo(), S.espia_segundo(), vetor_ponto_angulo[i].primeiro()))
+            
+            // Passo 9 do psedocódigo
+            S.desempilha();
+
+        // Passo 10 do pseudocódigo
+        S.empilha(vetor_ponto_angulo[i].primeiro());
+    }
+
+    // Passo 11 do pseudocódigo
+    return S;
 }
