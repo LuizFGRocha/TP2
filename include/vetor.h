@@ -132,6 +132,12 @@ class vetor {
         } 
     }
 
+    /// @brief clean o vetor, deixando-o como se tivesse acabado de ser criado
+    /// com um construtor vazio.
+    void clean() {
+        operator=(vetor<Tipo>());
+    }
+
     /// @brief Retorna o elemento em uma posição desejada. A posição tem que ter ser
     /// um número não negativo menor que o tamanho.
     /// @param posicao A posição desejada.

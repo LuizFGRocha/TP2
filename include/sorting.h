@@ -85,7 +85,7 @@ vetor<int> countingsort(vetor<int>& vetor_entrada) {
     for (int i = 0; i < vetor_entrada.size(); ++i)
         vetor_contagem[vetor_entrada[i]]++;
 
-    vetor_entrada.limpa();
+    vetor_entrada.clean();
 
     for (int i = 0; i < vetor_contagem.size(); ++i)
         while (vetor_contagem[i] > 0) {
@@ -123,7 +123,7 @@ vetor<double> bucketsort(vetor<double>& vetor_entrada, int n_baldes = 10) {
     for (int i = 0; i < vetor_de_baldes.size(); ++i)
         insertionsort(vetor_de_baldes[i]);
 
-    vetor_entrada.limpa();
+    vetor_entrada.clean();
 
     for (int i = 0; i < vetor_de_baldes.size(); ++i)
         for (int j = 0; j < vetor_de_baldes[i].size(); j++)
