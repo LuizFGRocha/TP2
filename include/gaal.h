@@ -1,3 +1,8 @@
+#include <string>
+#include <iostream>
+
+struct excecao_pontos_iguais{};
+
 /// @brief Representa um ponto com duas coordenadas inteiras
 class ponto {
   public:
@@ -13,6 +18,8 @@ class ponto {
     /// @brief Acessa a coordenada y
     /// @return Retorna uma referência para a coordenada y
     int& coordenada_y();
+
+    void imprime_ponto();
 
   private:
     int x_m;
@@ -32,4 +39,4 @@ class reta {
 /// @return Retorna o double correspondente ao ângulo
 double angulo(ponto p, ponto q);
 
-bool nao_vira_para_a_esquerda(ponto p, ponto q);
+bool nao_vira_para_a_esquerda(ponto p, ponto q, ponto r);
