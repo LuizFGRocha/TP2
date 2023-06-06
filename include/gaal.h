@@ -61,3 +61,7 @@ double comprimento(ponto p, ponto q);
 /// @return Retorna true se o giro for no sentido horário, false 
 /// caso contrário.
 bool gira_sentido_horario(ponto p, ponto q, ponto r);
+
+/// @brief Checa se os pontos são colineares
+/// @return Retorna true se forem, false caso contrário
+bool sao_colineares(ponto p, ponto q, ponto r);

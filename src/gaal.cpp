@@ -27,20 +27,28 @@ void ponto::imprime_ponto() {
 
 double angulo(ponto p, ponto q) {
 
-    double dx = p.coordenada_x() - q.coordenada_x();
-    double dy = p.coordenada_y() - q.coordenada_y();
+    double dx = q.coordenada_x() - p.coordenada_x();
+    double dy = q.coordenada_y() - p.coordenada_y();
 
-    if (dx > 0) { 
+    if (dx > 0) {
+        if (dy >= 0)
+            return atan(dy / dx);
+        else
+            return atan(dy / dx) + M_PI * 2;
+    } 
+    
+    else if (dx < 0)
         return atan(dy / dx) + M_PI;
 
-    } else if (dx == 0) {
-        if (dy == 0)
+    else {
+        if (dy > 0)
+            return M_PI;
+
+        else if (dy < 0)
+            return 3 * M_PI / 2;
+
+        else
             throw excecao_pontos_iguais{};
-
-        return (p.coordenada_y() < q.coordenada_y()) ? M_PI / 2 : 3 * M_PI / 2; // O caso em que os ponto são colineares com o eixo y
-
-    } else {
-        return atan(dy / dx);
     }
 }
 
@@ -55,25 +63,16 @@ bool gira_sentido_horario(ponto p, ponto q, ponto r) {
                 (q.coordenada_x() - p.coordenada_x()) * (r.coordenada_y() - q.coordenada_y());
 
     if (valor == 0)
-        return false;
-
-    if (valor > 0)
         return true;
 
-    else return false;
+    if (valor > 0)
+        return false;
+
+    else return true;
 }
 
-/// @todo Consertar
-bool nao_vira_para_a_esquerda(ponto p, ponto q, ponto r) {
-    try {
-        double q_p = angulo(q, p);
-        double q_r = angulo(q, r);
-        double dif = q_p - q_r;
-        if (q_p - q_r > M_PI)
-            return true;
-    } catch (excecao_pontos_iguais& e) {
-            return true;
-    }
-
-    return false;
+bool sao_colineares(ponto p, ponto q, ponto r) {
+    return (p.coordenada_x() * (q.coordenada_y() - r.coordenada_y()) +
+            q.coordenada_x() * (r.coordenada_y() - p.coordenada_y()) +
+            r.coordenada_x() * (p.coordenada_y() - q.coordenada_y()) == 0);
 }
