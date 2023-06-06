@@ -1,4 +1,5 @@
 #include "fecho_convexo.h"
+#include "time_measure.h"
 #include <getopt.h>
 #include <string>
 #include <iostream>
@@ -31,8 +32,17 @@ int main() {
 
     fecho_convexo resultado;
 
+    marca_inicio();
     resultado = varredura_de_graham(vetor_de_pontos, k_insertionsort);
-    resultado.imprime_e_apaga();
+    double tempo_insertion = fim_da_medida();
+    resultado.imprime();
+
+    marca_inicio();
+    varredura_de_graham(vetor_de_pontos, k_mergesort);
+    double tempo_merge = fim_da_medida();
+
+    cout << "GRAHAM+MERGESORT: " << tempo_merge << endl;
+    cout << "GRAHAM+INSERTIONSORT: " << tempo_insertion << endl;
 
     return 0;
 }
