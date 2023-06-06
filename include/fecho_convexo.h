@@ -1,3 +1,6 @@
+#ifndef FECHO_CONVEXO_H
+#define FECHO_CONVEXO_H
+
 #include "vetor.h"
 #include "pilha.h"
 #include "gaal.h"
@@ -30,38 +33,9 @@ class fecho_convexo {
         }
     }
 
-    void imprime_e_apaga() {
-        while (!pilha_m.vazia()) {
-            ponto atual = pilha_m.desempilha();
-            std::cout << "(" << atual.coordenada_x() << ", " << atual.coordenada_y() << ")" << std::endl;
-        }
-    }
-
   private:
     pilha<ponto> pilha_m;
 };
-
-/// @brief Encontra o ponto com a menor coordenada y e remove esse
-/// ponto do vetor.
-/// @param Q Vetor de pontos no qual a menor coordenada y será procurada.
-/// @return Retorna o ponto com a menor coordenada y.
-ponto extrai_y_minima(vetor<ponto>& Q) {
-    if (Q.empty())
-        throw excecao_vetor_vazio{};
-
-    ponto menor = Q[0];
-    int posicao_menor = 0;
-    for (int i = 1; i < Q.size(); ++i) {
-        if (Q[i].coordenada_y() < menor.coordenada_y()) {
-            menor = Q[i];
-            posicao_menor = i;
-        }
-    }
-
-    Q.remove(posicao_menor);
-
-    return menor;
-}
 
 /// @brief Encontra o ponto com a menor coordenada y e remove esse
 /// ponto do vetor.
@@ -148,3 +122,5 @@ fecho_convexo varredura_de_graham(vetor<ponto> Q, int metodo_de_ordenacao) {
     // Passo 11 do pseudocódigo
     return S;
 }
+
+#endif // FECHO_CONVEXO_H
