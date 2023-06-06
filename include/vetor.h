@@ -127,9 +127,11 @@ class vetor {
         if (size() - 1 < posicao)
             throw excecao_posicao_invalida{};
 
-        for (int i = posicao; i < size() - 2; ++i) {
+        for (int i = posicao; i < size() - 1; ++i) {
             (*this)[i] = (*this)[i + 1];
         } 
+
+        tamanho_m--;
     }
 
     /// @brief clean o vetor, deixando-o como se tivesse acabado de ser criado
