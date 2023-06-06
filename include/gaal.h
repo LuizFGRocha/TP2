@@ -1,3 +1,8 @@
+#include <string>
+#include <iostream>
+
+struct excecao_pontos_iguais{};
+
 /// @brief Representa um ponto com duas coordenadas inteiras
 class ponto {
   public:
@@ -23,6 +28,8 @@ class ponto {
     /// @param rhs O ponto a ser subtraído desse
     /// @return Retorna o ponto resultante da subtração de *this com rhs
     ponto operator-(const ponto& rhs);
+    
+    void imprime_ponto();
 
   private:
     int x_m;
