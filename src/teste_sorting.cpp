@@ -10,7 +10,7 @@ TEST_CASE("Merge sort") {
     srand(time(NULL));
 
     vetor<int> teste;
-    for (int i = 0; i < 10000; ++i)
+    for (int i = 0; i < 50000; ++i)
         teste.push_back(rand());
 
     mergesort(teste);
@@ -31,7 +31,7 @@ TEST_CASE("Insertion sort") {
     srand(time(NULL));
 
     vetor<int> teste;
-    for (int i = 0; i < 10000; ++i)
+    for (int i = 0; i < 50000; ++i)
         teste.push_back(rand());
 
     insertionsort(teste);
@@ -52,7 +52,7 @@ TEST_CASE("Counting sort") {
     srand(time(NULL));
 
     vetor<int> teste;
-    for (int i = 0; i < 5; ++i)
+    for (int i = 0; i < 50000; ++i)
         teste.push_back(rand() % 10000);
 
     countingsort(teste);
@@ -73,7 +73,7 @@ TEST_CASE("Bucket sort") {
     srand(time(NULL));
 
     vetor<par<ponto,double>> teste;
-    for (int i = 0; i < 20; ++i)
+    for (int i = 0; i < 50000; ++i)
         teste.push_back(par<ponto, double>(ponto(0, 0), (double) rand() / RAND_MAX));
 
     bucketsort(teste);
