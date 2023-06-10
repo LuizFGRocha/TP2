@@ -27,18 +27,20 @@ class vetor {
         operator=(vetor_entrada);
     }
 
-    /// @brief Aumenta o tamanho sem inicializar as novas posições.
-    /// @param tamanho Novo tamanho.
-    void set_size(int tamanho) {
-        capacidade_m = 2 * tamanho;
+    /// @brief Aumenta a capacidade sem inicializar as novas posições.
+    /// @param capacidade Nova capacidade.
+    void set_capacity(int capacidade) {
         Tipo* temp = vetor_m;
-        vetor_m = new Tipo[capacidade_m];
+        vetor_m = new Tipo[capacidade];
 
         for (int i = 0; i < tamanho_m; ++i) {
             vetor_m[i] = temp[i];
         }
 
-        tamanho_m = tamanho;
+        if (tamanho_m > capacidade)
+            tamanho_m = capacidade;
+
+        capacidade_m = capacidade;
 
         delete [] temp;
     }
