@@ -70,8 +70,8 @@ double comprimento(ponto p, ponto q) {
 }
 
 bool gira_sentido_horario(ponto p, ponto q, ponto r, bool estrito) {
-    long long int valor = (q.coordenada_y() - p.coordenada_y()) * (r.coordenada_x() - q.coordenada_x()) -
-                (q.coordenada_x() - p.coordenada_x()) * (r.coordenada_y() - q.coordenada_y());
+    double valor = ( (double) q.coordenada_y() - p.coordenada_y()) * ( (double) r.coordenada_x() - q.coordenada_x()) -
+                  ( (double) q.coordenada_x() - p.coordenada_x()) * ( (double) r.coordenada_y() - q.coordenada_y());
 
     if (valor == 0 && estrito == false)
         return true;
