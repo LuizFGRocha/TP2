@@ -1,3 +1,6 @@
+#ifndef PAR_H
+#define PAR_H
+
 /// @brief Representa um par
 /// @tparam T O tipo do primeiro elemento do par
 /// @tparam U O tipo do segundo elemento do par
@@ -74,3 +77,5 @@ class par {
     T primeiro_m;
     U segundo_m;
 };
+
+#endif // PAR_H
