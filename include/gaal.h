@@ -1,3 +1,6 @@
+#ifndef GAAL_H
+#define GAAL_H
+
 #include <string>
 #include <iostream>
 
@@ -13,11 +16,11 @@ class ponto {
 
     /// @brief Acessa a coordenada x
     /// @return Retorna uma referência para a coordenada x
-    int& coordenada_x();
+    long long& coordenada_x();
 
     /// @brief Acessa a coordenada y
     /// @return Retorna uma referência para a coordenada y
-    int& coordenada_y();
+    long long& coordenada_y();
 
     /// @brief Operador de soma de pontos
     /// @param rhs O ponto a ser somado com esse
@@ -28,12 +31,24 @@ class ponto {
     /// @param rhs O ponto a ser subtraído desse
     /// @return Retorna o ponto resultante da subtração de *this com rhs
     ponto operator-(const ponto& rhs);
-    
+
+    /// @brief Operador de comparação de igualdade de pontos
+    /// @param rhs O ponto com que *this será comparado
+    /// @return Retorna true se os pontos tiverem coordenadas iguais, false
+    /// caso contrário.
+    bool operator==(ponto& rhs);
+
+    /// @brief Operador de comparação de desigualdade de pontos
+    /// @param rhs O ponto com que *this será comparado
+    /// @return Retorna true se os pontos tiverem coordenadas diferentes, false
+    /// caso contrário.
+    bool operator!=(ponto& rhs);
+
     void imprime_ponto();
 
   private:
-    int x_m;
-    int y_m;
+    long long x_m;
+    long long y_m;
 };
 
 /// @brief Representa reta na forma ax + b = y
@@ -58,10 +73,15 @@ double comprimento(ponto p, ponto q);
 /// @param p O primeiro ponto
 /// @param q O segundo ponto
 /// @param r O terceiro ponto
+/// @param estrito Opcional. Default = false. Diz se um giro 0 deve retornar
+/// true ou false. Se estrito == true, retorna false, caso contrário,
+/// retorna true.
 /// @return Retorna true se o giro for no sentido horário, false 
 /// caso contrário.
-bool gira_sentido_horario(ponto p, ponto q, ponto r);
+bool gira_sentido_horario(ponto p, ponto q, ponto r, bool estrito=false);
 
 /// @brief Checa se os pontos são colineares
 /// @return Retorna true se forem, false caso contrário
 bool sao_colineares(ponto p, ponto q, ponto r);
+
+#endif // GAAL_H
