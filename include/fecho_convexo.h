@@ -66,6 +66,29 @@ ponto extrai_y_minima(vetor<ponto>& Q) {
     return menor;
 }
 
+ponto x_minima(vetor<ponto>& Q) {
+    if (Q.empty())
+        throw excecao_vetor_vazio{};
+
+    ponto menor = Q[0];
+    int posicao_menor = 0;
+    for (int i = 1; i < Q.size(); ++i) {
+
+        if (Q[i].coordenada_x() < menor.coordenada_x()) {
+            menor = Q[i];
+            posicao_menor = i;
+
+        } else if (Q[i].coordenada_x() == menor.coordenada_x()) {
+
+            if (Q[i].coordenada_y() < menor.coordenada_y())
+                menor = Q[i];
+                posicao_menor = i;
+        }
+    }
+
+    return menor;
+}
+
 fecho_convexo varredura_de_graham(vetor<ponto> Q, int metodo_de_ordenacao) {
 
     // Passo 1
@@ -73,6 +96,7 @@ fecho_convexo varredura_de_graham(vetor<ponto> Q, int metodo_de_ordenacao) {
 
     // Passo 2
     vetor<par<ponto, double>> vetor_ponto_angulo; // Vetor de pares ponto-ângulo
+    vetor_ponto_angulo.set_capacity(Q.size());
     for (int i = 0; i < Q.size(); ++i)
         vetor_ponto_angulo.push_back(par<ponto, double>(Q[i], angulo(p0, Q[i])));
 
@@ -83,9 +107,9 @@ fecho_convexo varredura_de_graham(vetor<ponto> Q, int metodo_de_ordenacao) {
         case k_insertionsort:
             insertionsort(vetor_ponto_angulo);
             break;
-        /* case k_bucketsort:
+        case k_bucketsort:
             bucketsort(vetor_ponto_angulo);
-            break; */
+            break;
         default:
             throw excecao_metodo_de_ordenacao_invaido{};
     }
@@ -131,6 +155,31 @@ fecho_convexo varredura_de_graham(vetor<ponto> Q, int metodo_de_ordenacao) {
 
     // Passo 11
     return S;
+}
+
+fecho_convexo marcha_de_jarvis(vetor<ponto> Q) {
+    vetor<ponto> fecho;
+
+    ponto ponto_no_fecho = x_minima(Q);
+
+    int index_ponto = 0;
+    ponto ponto_final = Q[index_ponto];
+    do {
+        fecho.push_back(ponto_no_fecho);
+        ponto_final = Q[0];
+        for (int i = 0; i < Q.size(); ++i) {
+            if (ponto_final == ponto_no_fecho || !gira_sentido_horario(ponto_no_fecho, Q[i], ponto_final))
+                ponto_final = Q[i];
+        }
+        index_ponto++;
+        ponto_no_fecho = ponto_final;
+    } while (fecho[0] != ponto_final);
+
+    for (int i = 0; i < fecho.size(); ++i)
+        if (sao_colineares(fecho[i], fecho[(i+1) % fecho.size()], fecho[(i+2) % fecho.size()]))
+            fecho.remove((i + 1) % fecho.size());
+
+    return fecho;
 }
 
 #endif // FECHO_CONVEXO_H
