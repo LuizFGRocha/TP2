@@ -1,3 +1,6 @@
+#ifndef SORTING_H
+#define SORTING_H
+
 #include "vetor.h"
 #include "gaal.h"
 #include "par.h"
@@ -145,3 +148,5 @@ vetor<par<ponto, double>> bucketsort(vetor<par<ponto, double>>& vetor_entrada, i
 
     return vetor_entrada;
 }
+
+#endif // SORTING_H
