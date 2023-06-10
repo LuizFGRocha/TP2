@@ -1,7 +1,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "../include/doctest.h"
 
-#include "sorting.h"
+#include "../include/sorting.h"
 #include <time.h>
 #include <cstdlib>
 #include <iostream>
@@ -13,7 +13,7 @@ TEST_CASE("Merge sort") {
     for (int i = 0; i < 10000; ++i)
         teste.push_back(rand());
 
-    teste = mergesort(teste);
+    mergesort(teste);
 
     bool verificacao = true;
 
@@ -34,7 +34,7 @@ TEST_CASE("Insertion sort") {
     for (int i = 0; i < 10000; ++i)
         teste.push_back(rand());
 
-    teste = insertionsort(teste);
+    insertionsort(teste);
 
     bool verificacao = true;
 
@@ -55,7 +55,7 @@ TEST_CASE("Counting sort") {
     for (int i = 0; i < 5; ++i)
         teste.push_back(rand() % 10000);
 
-    teste = countingsort(teste);
+    countingsort(teste);
 
     bool verificacao = true;
 
@@ -72,11 +72,11 @@ TEST_CASE("Counting sort") {
 TEST_CASE("Bucket sort") {
     srand(time(NULL));
 
-    vetor<double> teste;
+    vetor<par<ponto,double>> teste;
     for (int i = 0; i < 20; ++i)
-        teste.push_back((double) rand() / RAND_MAX);
+        teste.push_back(par<ponto, double>(ponto(0, 0), (double) rand() / RAND_MAX));
 
-    teste = bucketsort(teste);
+    bucketsort(teste);
 
     bool verificacao = true;
 
