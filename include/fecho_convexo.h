@@ -29,8 +29,8 @@ class fecho_convexo {
 
     void imprime() {
         for (int i = vetor_m.size() - 1; i >= 0; i--)
-            std::cout << "(" << vetor_m[i].coordenada_x() << ", "
-                      << vetor_m[i].coordenada_y() << ")" << std::endl;
+            std::cout << vetor_m[i].coordenada_x() << " "
+                      << vetor_m[i].coordenada_y() << std::endl;
     }
 
   private:
