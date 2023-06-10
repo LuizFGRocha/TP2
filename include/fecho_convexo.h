@@ -138,7 +138,7 @@ fecho_convexo varredura_de_graham(vetor<ponto> Q, int metodo_de_ordenacao) {
         // Passo 8
         while (gira_sentido_horario(S[S.size() - 1], S[S.size() - 2], vetor_ponto_angulo[i].primeiro())) {
             
-            // Passo 9 do psedocódigo
+            // Passo 9
             ponto p = S.pop_back();
 
         }
