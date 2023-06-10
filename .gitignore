@@ -3,3 +3,5 @@ obj/*.o
 bin/*
 !*/.gitkeep
 /.vscode
+resultado_experimento.csv
+.ipynb_checkpoints
