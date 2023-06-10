@@ -1,4 +1,6 @@
 #include "vetor.h"
+#include "gaal.h"
+#include "par.h"
 
 /// @brief Ordena o vetor para que os itens fiquem na ordem
 /// crescente.
@@ -26,9 +28,8 @@ vetor<T> insertionsort(vetor<T>& vetor_entrada) {
     return vetor_entrada;
 }
 
-/// @todo
 template <typename T>
-vetor<T> mergesort(vetor<T>& vetor_entrada, int esq = 0, int dir = -1) {
+void mergesort(vetor<T>& vetor_entrada, int esq = 0, int dir = -1) {
     
     if (dir == -1)
         dir = vetor_entrada.size() - 1;
@@ -38,35 +39,40 @@ vetor<T> mergesort(vetor<T>& vetor_entrada, int esq = 0, int dir = -1) {
         mergesort(vetor_entrada, esq, meio);
         mergesort(vetor_entrada, meio + 1, dir);
 
-        vetor<T> resultado;
-        int i = esq, j = meio + 1;
-        while (i <= meio && j <= dir) {
-            if (vetor_entrada[i] < vetor_entrada[j]) {
-                resultado.push_back(vetor_entrada[i]);
-                i++;
-            } else {
-                resultado.push_back(vetor_entrada[j]);
-                j++;
-            }
-        }
-
-        if (resultado.size() < vetor_entrada.size()) {
-            for (; i <= meio; ++i) {
-                resultado.push_back(vetor_entrada[i]);
-            }
-
-            for (; j <= dir; ++j) {
-                resultado.push_back(vetor_entrada[j]);
-            }
-        
-        }
-
-        for (int i = 0; i < resultado.size(); ++i)
-            vetor_entrada[esq++] = resultado[i];
-
+        merge(vetor_entrada, esq, meio, dir);
     }
 
-    return vetor_entrada;
+    //return vetor_entrada;
+}
+
+template <typename T>
+void merge(vetor<T>& vetor_entrada, int esq, int meio, int dir) {
+    vetor<T> resultado;
+    resultado.set_capacity(dir - esq + 1);
+    int i = esq, j = meio + 1;
+    while (i <= meio && j <= dir) {
+        if (vetor_entrada[i] < vetor_entrada[j]) {
+            resultado.push_back(vetor_entrada[i]);
+            i++;
+        } else {
+            resultado.push_back(vetor_entrada[j]);
+            j++;
+        }
+    }
+
+    if (resultado.size() < vetor_entrada.size()) {
+        for (; i <= meio; ++i) {
+            resultado.push_back(vetor_entrada[i]);
+        }
+
+        for (; j <= dir; ++j) {
+            resultado.push_back(vetor_entrada[j]);
+        }
+    
+    }
+
+    for (int i = 0; i < resultado.size(); ++i)
+        vetor_entrada[esq++] = resultado[i];
 }
 
 /// @brief Algoritmo de ordenação linear inplace. Assume vetor
@@ -96,24 +102,30 @@ vetor<int> countingsort(vetor<int>& vetor_entrada) {
     return vetor_entrada;
 }
 
-vetor<double> bucketsort(vetor<double>& vetor_entrada, int n_baldes = 10) {
+vetor<par<ponto, double>> bucketsort(vetor<par<ponto, double>>& vetor_entrada, int n_baldes = -1) {
     if (vetor_entrada.size() == 1) return vetor_entrada;
 
-    vetor<vetor<double>> vetor_de_baldes(10, vetor<double>());
+    if (n_baldes = -1)
+        n_baldes = vetor_entrada.size() / 20;
 
-    double limite_superior = vetor_entrada[0];
-    double limite_inferior = vetor_entrada[0];
+    if (n_baldes == 0)
+        n_baldes++;
+
+    vetor<vetor<par<ponto, double>>> vetor_de_baldes(n_baldes, vetor<par<ponto, double>>());
+
+    double limite_superior = vetor_entrada[0].segundo();
+    double limite_inferior = vetor_entrada[0].segundo();
     for (int i = 1; i < vetor_entrada.size(); ++i) {
-        if (vetor_entrada[i] > limite_superior)
-            limite_superior = vetor_entrada[i];
-        else if (vetor_entrada[i] < limite_inferior)
-            limite_inferior = vetor_entrada[i];
+        if (vetor_entrada[i].segundo() > limite_superior)
+            limite_superior = vetor_entrada[i].segundo();
+        else if (vetor_entrada[i].segundo() < limite_inferior)
+            limite_inferior = vetor_entrada[i].segundo();
     }
 
     double range = (limite_superior - limite_inferior) / n_baldes;
     
     for (int i = 0; i < vetor_entrada.size(); ++i) {
-        int posicao_de_insercao = (vetor_entrada[i] - limite_inferior) / range;
+        int posicao_de_insercao = (vetor_entrada[i].segundo() - limite_inferior) / range;
         if (posicao_de_insercao == n_baldes)
             posicao_de_insercao--;
 
@@ -123,7 +135,9 @@ vetor<double> bucketsort(vetor<double>& vetor_entrada, int n_baldes = 10) {
     for (int i = 0; i < vetor_de_baldes.size(); ++i)
         insertionsort(vetor_de_baldes[i]);
 
+    int capacidade = vetor_entrada.capacity();
     vetor_entrada.clean();
+    vetor_entrada.set_capacity(capacidade);
 
     for (int i = 0; i < vetor_de_baldes.size(); ++i)
         for (int j = 0; j < vetor_de_baldes[i].size(); j++)
