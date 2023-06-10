@@ -2,14 +2,11 @@
 #define FECHO_CONVEXO_H
 
 #include "vetor.h"
-#include "pilha.h"
 #include "gaal.h"
 #include "par.h"
 #include "sorting.h"
-#include "lista.h"
 #include <iostream>
 #include <cmath>
-#include <iostream>
 
 #define k_mergesort 0
 #define k_insertionsort 1
@@ -17,16 +14,19 @@
 
 struct excecao_metodo_de_ordenacao_invaido{};
 
+/// @brief Representa um fecho convexo
 class fecho_convexo {
 
   public:
 
     fecho_convexo() : vetor_m() {}
 
+    /// @brief Cria o fecho a partir de um vetor de pontos
     fecho_convexo(vetor<ponto>& vetor) {
         vetor_m = vetor;
     }
 
+    /// @brief Imprime o fecho na tela
     void imprime() {
         for (int i = vetor_m.size() - 1; i >= 0; i--)
             std::cout << vetor_m[i].coordenada_x() << " "
@@ -34,6 +34,7 @@ class fecho_convexo {
     }
 
   private:
+    /// @brief Vetor com os pontos no fecho
     vetor<ponto> vetor_m;
 };
 
@@ -66,6 +67,8 @@ ponto extrai_y_minima(vetor<ponto>& Q) {
     return menor;
 }
 
+/// @brief Encontra e retorna o ponto com a menor coordenada X
+/// @param Q O vetor de pontos em que esse ponto será encontrado
 ponto x_minima(vetor<ponto>& Q) {
     if (Q.empty())
         throw excecao_vetor_vazio{};
@@ -89,6 +92,11 @@ ponto x_minima(vetor<ponto>& Q) {
     return menor;
 }
 
+/// @brief Usa a varredura de graham para encontrar o fecho convexo de um vetor de pontos. Implementação
+/// do pseudocódigo do Cormen.
+/// @param Q O vetor de pontos
+/// @param metodo_de_ordenacao Opção de método de ordenação (k_mergesort, k_insertionsort, k_bucketsort)
+/// @return Retorna um objeto fecho convexo com os pontos que montam o fecho
 fecho_convexo varredura_de_graham(vetor<ponto> Q, int metodo_de_ordenacao) {
 
     // Passo 1
@@ -157,6 +165,10 @@ fecho_convexo varredura_de_graham(vetor<ponto> Q, int metodo_de_ordenacao) {
     return S;
 }
 
+
+/// @brief Usa a marcha de Jarvis para achar o fecho convexo de um vetor de pontos.
+/// @param Q O vetor de pontos
+/// @return Retorna um objeto fecho convexo com os pontos que montam o fecho
 fecho_convexo marcha_de_jarvis(vetor<ponto> Q) {
     vetor<ponto> fecho;
 
