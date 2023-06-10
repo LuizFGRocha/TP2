@@ -154,6 +154,19 @@ class vetor {
         }
     }
 
+    /// @brief Compara dois vetores
+    /// @param rhs O vetor da direita
+    /// @return True se tiverem o mesmo tamanho e os elementos em cada posição forem
+    /// iguais, false caso contrário.
+    bool operator==(const vetor<Tipo>& rhs) {
+        if (tamanho_m != rhs.tamanho_m)
+            return false;
+        for (int i = 0; i < tamanho_m; ++i)
+            if (vetor_m[i] != rhs.vetor_m[i])
+                return false;
+        return true;
+    }
+
     /// @brief Copia os conteúdos de um vetor para outro
     /// @param rhs O vetor cujos conteúdos serão copiados
     /// @return Retorna uma referência para o vetor que recebe a cópia
