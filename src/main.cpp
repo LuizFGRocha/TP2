@@ -35,9 +35,10 @@ void uso() {
     cerr << "Se o modo experimento é ativado sem a flag \"-t\" o experimento é realizado com o arquivo de entrada." << endl
          << "A opção \"-i\" só é funcional quando é passada a flag \"-t\"." << endl
          << "O uso de \"-t\" fora do modo experimento gerará um vetor aleatório, calculará o fecho e imprimirá o resultado na tela." << endl << endl;
-    cerr << "\tATENÇÃO: O programa também suporta a entrada no formato \"<executavel> fecho <nome_do_arquivo>\", ex: \"./bin/main fecho arquivo_entrada.txt\"." << endl
-         << "\tO argumento \"-p\" sobrepõe esse formato, mas ele ainda funciona em conjunto com os demais argumentos, desde que eles venham depois, na forma \"<executavel>\n"
-         << "fecho <nome_do_arquivo> <outros argumentos>\"." << endl
+    cerr << "\tATENÇÃO: O programa também suporta a entrada no formato \"<executavel> fecho <nome_do_arquivo>\", ex: \"./bin/main" << endl
+         << "fecho arquivo_entrada.txt\"." << endl
+         << "\tO argumento \"-p\" sobrepõe esse formato, mas ele ainda funciona em conjunto com os demais argumentos, desde que eles" << endl
+         << "venham depois, na forma \"<executavel>  fecho <nome_do_arquivo> <outros argumentos>\"." << endl
          << "\tA forma \"<executavel> fecho <outros arugumentos>\", sem passar o arquivo, gera comportamento indeterminado." << endl;
 }
 
