@@ -35,13 +35,15 @@ void uso() {
     cerr << "Se o modo experimento é ativado sem a flag \"-t\" o experimento é realizado com o arquivo de entrada." << endl
          << "A opção \"-i\" só é funcional quando é passada a flag \"-t\"." << endl
          << "O uso de \"-t\" fora do modo experimento gerará um vetor aleatório, calculará o fecho e imprimirá o resultado na tela." << endl << endl;
-    cerr << "ATENÇÃO: O programa também suporta a entrada no formato \"<executavel> fecho <nome_do_arquivo>\", ex: \"./bin/main fecho arquivo_entrada.txt\"." << endl
-         << "Esse formato sobrepõe o argumento \"-p\", mas ainda funciona em conjunto com os demais argumentos." << endl;
+    cerr << "\tATENÇÃO: O programa também suporta a entrada no formato \"<executavel> fecho <nome_do_arquivo>\", ex: \"./bin/main fecho arquivo_entrada.txt\"." << endl
+         << "\tO argumento \"-p\" sobrepõe esse formato, mas ele ainda funciona em conjunto com os demais argumentos, desde que eles venham depois, na forma \"<executavel>\n"
+         << "fecho <nome_do_arquivo> <outros argumentos>\"." << endl
+         << "\tA forma \"<executavel> fecho <outros arugumentos>\", sem passar o arquivo, gera comportamento indeterminado." << endl;
 }
 
 void parse_args(args& argumentos, int argc, char** argv) {
     int c;
-    bool f_tam = false, f_ent = false, f_sai = false;
+    bool f_tam = false, f_sai = false;
 
     argumentos.f_experimento = false;
     argumentos.tamanho_experimento = 0;
@@ -51,7 +53,6 @@ void parse_args(args& argumentos, int argc, char** argv) {
         switch (c) {
             case 'p':
                 argumentos.arquivo_entrada = optarg;
-                f_ent = true;
                 break;
             case 'x':
                 argumentos.f_experimento = true;
@@ -79,14 +80,11 @@ void parse_args(args& argumentos, int argc, char** argv) {
         }
     }
 
-    if (argumentos.f_experimento && !f_tam)
-        argumentos.tamanho_experimento = 100;
-
     if (argumentos.f_experimento && !f_sai)
         argumentos.arquivo_saida_experimento = "./resultado_experimento.csv";
 
-    if (!f_ent)
-        argumentos.arquivo_entrada = "/home/luiz/estruturas_de_dados/TP2/entrada.txt";
+    if (argumentos.arquivo_entrada.empty())
+        argumentos.arquivo_entrada = "./entrada.txt";
 }
 
 void gera_vetor_aleatorio(vetor<ponto>& vetor_entrada, int tamanho) {
@@ -122,11 +120,12 @@ void le_de_arquivo_para_vetor(string arquivo, vetor<ponto>& vetor_entrada) {
 int main(int argc, char** argv) {
 
     args argumentos;
-    parse_args(argumentos, argc, argv);
 
     if (argc >= 3)
         if (argv[1] == string("fecho")) 
             argumentos.arquivo_entrada = argv[2];
+
+    parse_args(argumentos, argc, argv);
 
     vetor<ponto> vetor_de_pontos;
 
@@ -141,8 +140,10 @@ int main(int argc, char** argv) {
                     vetor_aleatorio << vetor_de_pontos[i].coordenada_x() << " " << vetor_de_pontos[i].coordenada_y() << std::endl; 
             }
         }
-        else 
+        else {
             le_de_arquivo_para_vetor(argumentos.arquivo_entrada, vetor_de_pontos);
+            argumentos.tamanho_experimento = vetor_de_pontos.size();
+        }
     } else 
         le_de_arquivo_para_vetor(argumentos.arquivo_entrada, vetor_de_pontos);
 
@@ -168,7 +169,9 @@ int main(int argc, char** argv) {
     double tempo_bucket = fim_da_medida();
 
     if (!argumentos.f_experimento) {
+        cout << "FECHO CONVEXO:" << endl; 
         resultado_graham_bucket.imprime();
+        cout << endl;
 
         cout << setprecision(3) << fixed;
 
