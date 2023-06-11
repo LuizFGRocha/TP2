@@ -2,6 +2,8 @@
 #include "../include/doctest.h"
 
 #include "../include/sorting.h"
+#include "gaal.h"
+#include "par.h"
 #include <time.h>
 #include <cstdlib>
 #include <iostream>
