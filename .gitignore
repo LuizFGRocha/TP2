@@ -5,3 +5,4 @@ bin/*
 /.vscode
 resultado_experimento.csv
 .ipynb_checkpoints
+vetor_utilizado.txt
