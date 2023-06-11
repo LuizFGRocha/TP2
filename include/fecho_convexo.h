@@ -50,12 +50,12 @@ ponto x_minima(vetor<ponto>& Q);
 /// @param Q O vetor de pontos
 /// @param metodo_de_ordenacao Opção de método de ordenação (k_mergesort, k_insertionsort, k_bucketsort)
 /// @return Retorna um vetor com os pontos que montam o fecho
-vetor<ponto> varredura_de_graham(vetor<ponto> Q, int metodo_de_ordenacao);
+vetor<ponto> varredura_de_graham(vetor<ponto> Q, int metodo_de_ordenacao=k_bucketsort);
 
 
-/// @brief Usa a marcha de Jarvis para achar o fecho convexo de um vetor de pontos.
+/// @brief Usa a marchar de Jarvis para achar o fecho convexo de um vetor de pontos.
 /// @param Q O vetor de pontos
 /// @return Retorna um vetor com os pontos que montam o fecho
-vetor<ponto> marcha_de_jarvis(vetor<ponto> Q);
+vetor<ponto> marchar_de_jarvis(vetor<ponto> Q);
 
 #endif // FECHO_CONVEXO_H
