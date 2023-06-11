@@ -11,7 +11,7 @@ fecho_convexo& fecho_convexo::operator=(vetor<ponto> vetor_pontos) {
 }
 
 void fecho_convexo::imprime() {
-    for (int i = vetor_m.size() - 1; i >= 0; i--)
+    for (int i = 0; i < vetor_m.size(); i++)
         std::cout << vetor_m[i].coordenada_x() << " "
                   << vetor_m[i].coordenada_y() << std::endl;
 }
@@ -125,7 +125,7 @@ vetor<ponto> varredura_de_graham(vetor<ponto> Q, int metodo_de_ordenacao) {
 
     // Remove pontos colineares
     for (int i = 0; i < S.size(); ++i)
-        if (sao_colineares(S[i], S[(i+1) % S.size()], S[(i+2) % S.size()]))
+        while (sao_colineares(S[i], S[(i+1) % S.size()], S[(i+2) % S.size()]))
             S.remove((i + 1) % S.size());
 
     // Passo 11
@@ -151,7 +151,7 @@ vetor<ponto> marchar_de_jarvis(vetor<ponto> Q) {
     } while (fecho[0] != ponto_final);
 
     for (int i = 0; i < fecho.size(); ++i)
-        if (sao_colineares(fecho[i], fecho[(i+1) % fecho.size()], fecho[(i+2) % fecho.size()]))
+        while (sao_colineares(fecho[i], fecho[(i+1) % fecho.size()], fecho[(i+2) % fecho.size()]))
             fecho.remove((i + 1) % fecho.size());
 
     return fecho;
