@@ -125,7 +125,7 @@ int main(int argc, char** argv) {
     fecho_convexo resultado_jarvis, resultado_graham_merge, resultado_graham_insertion, resultado_graham_bucket;
 
     marca_inicio();
-    resultado_jarvis = marcha_de_jarvis(vetor_de_pontos);
+    resultado_jarvis = marchar_de_jarvis(vetor_de_pontos);
     double tempo_jarvis = fim_da_medida();
 
     marca_inicio();
