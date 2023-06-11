@@ -111,7 +111,7 @@ vetor<ponto> varredura_de_graham(vetor<ponto> Q, int metodo_de_ordenacao) {
     for (int i = 2; i < vetor_ponto_angulo.size(); ++i) {
 
         // Passo 8
-        while (gira_sentido_horario(S[S.size() - 1], S[S.size() - 2], vetor_ponto_angulo[i].primeiro())) {
+        while (gira_sentido_horario(S[S.size() - 1], S[S.size() - 2], vetor_ponto_angulo[i].primeiro(), true)) {
             
             // Passo 9
             ponto p = S.pop_back();
@@ -132,7 +132,7 @@ vetor<ponto> varredura_de_graham(vetor<ponto> Q, int metodo_de_ordenacao) {
     return S;
 }
 
-vetor<ponto> marcha_de_jarvis(vetor<ponto> Q) {
+vetor<ponto> marchar_de_jarvis(vetor<ponto> Q) {
     vetor<ponto> fecho;
 
     ponto ponto_no_fecho = x_minima(Q);
