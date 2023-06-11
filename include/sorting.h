@@ -45,7 +45,6 @@ void mergesort(vetor<T>& vetor_entrada, int esq = 0, int dir = -1) {
         merge(vetor_entrada, esq, meio, dir);
     }
 
-    //return vetor_entrada;
 }
 
 template <typename T>
@@ -109,7 +108,7 @@ vetor<par<ponto, double>> bucketsort(vetor<par<ponto, double>>& vetor_entrada, i
     if (vetor_entrada.size() == 1) return vetor_entrada;
 
     if (n_baldes = -1)
-        n_baldes = vetor_entrada.size() / 20;
+        n_baldes = vetor_entrada.size() / 10;
 
     if (n_baldes == 0)
         n_baldes++;
