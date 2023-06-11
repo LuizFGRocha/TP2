@@ -1,4 +1,4 @@
-entrada.txt
+*.txt
 obj/*.o
 bin/*
 !*/.gitkeep

@@ -18,4 +18,4 @@ obj/%.o: src/%.cpp $(HDRS)
 	g++ -c $< -o $@ -Iinclude
 
 clean:
-	rm obj/* bin/*
+	rm obj/* bin/* -rf
