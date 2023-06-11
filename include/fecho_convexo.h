@@ -23,6 +23,10 @@ class fecho_convexo {
     /// @brief Cria o fecho a partir de um vetor de pontos
     fecho_convexo(vetor<ponto>& vetor);
 
+    /// @brief Atribui um vetor ao fecho sem calcular o fecho
+    /// @param vetor_pontos O vetor a ser atribuído
+    fecho_convexo& operator=(vetor<ponto> vetor_pontos);
+
     /// @brief Imprime o fecho na tela
     void imprime();
 
@@ -45,13 +49,13 @@ ponto x_minima(vetor<ponto>& Q);
 /// do pseudocódigo do Cormen.
 /// @param Q O vetor de pontos
 /// @param metodo_de_ordenacao Opção de método de ordenação (k_mergesort, k_insertionsort, k_bucketsort)
-/// @return Retorna um objeto fecho convexo com os pontos que montam o fecho
-fecho_convexo varredura_de_graham(vetor<ponto> Q, int metodo_de_ordenacao);
+/// @return Retorna um vetor com os pontos que montam o fecho
+vetor<ponto> varredura_de_graham(vetor<ponto> Q, int metodo_de_ordenacao);
 
 
 /// @brief Usa a marcha de Jarvis para achar o fecho convexo de um vetor de pontos.
 /// @param Q O vetor de pontos
-/// @return Retorna um objeto fecho convexo com os pontos que montam o fecho
-fecho_convexo marcha_de_jarvis(vetor<ponto> Q);
+/// @return Retorna um vetor com os pontos que montam o fecho
+vetor<ponto> marcha_de_jarvis(vetor<ponto> Q);
 
 #endif // FECHO_CONVEXO_H
