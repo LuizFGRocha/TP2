@@ -107,7 +107,7 @@ vetor<int> countingsort(vetor<int>& vetor_entrada) {
 vetor<par<ponto, double>> bucketsort(vetor<par<ponto, double>>& vetor_entrada, int n_baldes = -1) {
     if (vetor_entrada.size() == 1) return vetor_entrada;
 
-    if (n_baldes = -1)
+    if (n_baldes < 0)
         n_baldes = vetor_entrada.size() / 10;
 
     if (n_baldes == 0)
@@ -123,6 +123,9 @@ vetor<par<ponto, double>> bucketsort(vetor<par<ponto, double>>& vetor_entrada, i
         else if (vetor_entrada[i].segundo() < limite_inferior)
             limite_inferior = vetor_entrada[i].segundo();
     }
+
+    if (limite_superior == limite_inferior) return vetor_entrada; // Evita a divisão por 0. Se o limite superior for igual ao
+                                                                  // inferior, todos os elementos são iguais.
 
     double range = (limite_superior - limite_inferior) / n_baldes;
     

@@ -14,6 +14,8 @@ struct excecao_erro_ao_abrir_arquivo{};
 
 struct excecao_erro_ao_ler_argumentos{};
 
+struct excecao_quantidade_de_pontos_menor_que_tres{};
+
 struct args {
     string arquivo_entrada;
 
@@ -121,6 +123,9 @@ int main(int argc, char** argv) {
             le_de_arquivo_para_vetor(argumentos.arquivo_entrada, vetor_de_pontos);
     } else 
         le_de_arquivo_para_vetor(argumentos.arquivo_entrada, vetor_de_pontos);
+
+    if (vetor_de_pontos.size() < 3)
+        throw excecao_quantidade_de_pontos_menor_que_tres{};
 
     fecho_convexo resultado_jarvis, resultado_graham_merge, resultado_graham_insertion, resultado_graham_bucket;
 

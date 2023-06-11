@@ -3,19 +3,26 @@
 
 struct excecao_posicao_invalida{};
 struct excecao_vetor_vazio{};
+struct excecao_erro_ao_alocar_memoria{};
 
 template <typename Tipo> 
 class vetor {
   public:
     
     /// @brief Inicializa o vetor. Por padrão, com tamanho 0 e capacidade 10.
-    vetor() : tamanho_m(0), capacidade_m(10), vetor_m(new Tipo[10]) {};
+    vetor() : tamanho_m(0), capacidade_m(10), vetor_m(new Tipo[10]) {
+        if (vetor_m == nullptr)
+            throw excecao_erro_ao_alocar_memoria{};
+    };
 
     /// @brief Inicializa o vetor com opção para tamanho inicial e valor de inicialização
     /// dos elementos.
     /// @param tamanho Tamnho inicial. 
     /// @param valor_inicial Valor de inicialização dos elementos.
     vetor(int tamanho, Tipo valor_inicial) : tamanho_m(tamanho), capacidade_m(2 * tamanho), vetor_m(new Tipo[tamanho]) {
+        if (vetor_m == nullptr)
+            throw excecao_erro_ao_alocar_memoria{};
+
         for (int i = 0; i < tamanho; ++i) {
             vetor_m[i] = valor_inicial;
         }
@@ -32,6 +39,9 @@ class vetor {
     void set_capacity(int capacidade) {
         Tipo* temp = vetor_m;
         vetor_m = new Tipo[capacidade];
+
+        if (vetor_m == nullptr)
+            throw excecao_erro_ao_alocar_memoria{};
 
         for (int i = 0; i < tamanho_m; ++i) {
             vetor_m[i] = temp[i];
@@ -52,6 +62,8 @@ class vetor {
         capacidade_m = 2 * tamanho;
         Tipo* temp = vetor_m;
         vetor_m = new Tipo[capacidade_m];
+        if (vetor_m == nullptr)
+            throw excecao_erro_ao_alocar_memoria{};
 
         int i;
         for (i = 0; i < tamanho_m; ++i) {
@@ -78,6 +90,8 @@ class vetor {
 
             capacidade_m *= 2;
             vetor_m = new Tipo[capacidade_m];
+            if (vetor_m == nullptr)
+                throw excecao_erro_ao_alocar_memoria{};
 
             int i;
             for (i = 0; i < tamanho_m; ++i) {
@@ -112,6 +126,8 @@ class vetor {
 
             capacidade_m /= 2;
             vetor_m = new Tipo[capacidade_m];
+            if (vetor_m == nullptr)
+                throw excecao_erro_ao_alocar_memoria{};
             for (int i = 0; i <= tamanho_m; ++i) {
                 vetor_m[i] = temp[i];
             }
@@ -175,6 +191,8 @@ class vetor {
         tamanho_m = 0;
         capacidade_m = rhs.capacidade_m;
         vetor_m = new Tipo[capacidade_m];
+        if (vetor_m == nullptr)
+            throw excecao_erro_ao_alocar_memoria{};
         for (int i = 0; i < rhs.size(); ++i)
             push_back(*(rhs.vetor_m + i));
 

@@ -104,7 +104,7 @@ vetor<ponto> varredura_de_graham(vetor<ponto> Q, int metodo_de_ordenacao) {
     S.push_back(vetor_ponto_angulo[0].primeiro());
 
     // Passo 6
-    if (vetor_ponto_angulo.size() >= 3)
+    if (vetor_ponto_angulo.size() >= 2)
         S.push_back(vetor_ponto_angulo[1].primeiro());
 
     // Passo 7
