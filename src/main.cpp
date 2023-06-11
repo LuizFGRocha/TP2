@@ -25,6 +25,19 @@ struct args {
     bool salvar;
 };
 
+void uso() {
+    cerr << "Resolvedor de fecho convexo" << endl << endl;
+    cerr << "\t-p <arquivo_de_entrada>: escolhe o arquivo de entrada. Padrão: \"entrada.txt\"." << endl;
+    cerr << "\t-x : ativa o modo experimento (os resultados serão impressos em um arquivo csv)." << endl;
+    cerr << "\t-t <tamanho (inteiro)>: escolhe um tamanho para a geração de um vetor aleatório de pontos, dispensando o arquivo de entrada." << endl;
+    cerr << "\t-i : se foi gerao um vetor aleatório, salva o vetor de pontos utilizado no arquivo \"vetor_utilizado.txt\"." << endl;
+    cerr << "\t-o <arquivo_de_saida>: determina o arquivo de saida do resultado do modo experimento. Padrão: \"resultado_experimento.csv\"." << endl << endl;
+    cerr << "Se o modo experimento é ativado sem a flag \"-t\" o experimento é realizado com o arquivo de entrada." << endl
+         << "A opção \"-i\" só é funcional quando é passada a flag \"-t\"." << endl
+         << "O uso de \"-t\" fora do modo experimento gerará um vetor aleatório, calculará o fecho e imprimirá o resultado na tela." << endl << endl;
+    cerr << "ATENÇÃO: O programa também suporta a entrada no formato \"<executavel> fecho <nome_do_arquivo>\", ex: \"./bin/main fecho arquivo_entrada.txt\"." << endl;
+}
+
 void parse_args(args& argumentos, int argc, char** argv) {
     int c;
     bool f_tam = false, f_ent = false, f_sai = false;
@@ -33,7 +46,7 @@ void parse_args(args& argumentos, int argc, char** argv) {
     argumentos.tamanho_experimento = 0;
     argumentos.salvar = false;
 
-    while ((c = getopt(argc, argv, "p:xt:o:i")) != EOF) {
+    while ((c = getopt(argc, argv, "p:xt:o:ih")) != EOF) {
         switch (c) {
             case 'p':
                 argumentos.arquivo_entrada = optarg;
@@ -52,12 +65,16 @@ void parse_args(args& argumentos, int argc, char** argv) {
                 break;
             case 'i':
                 argumentos.salvar = true;
+                break;
+            case 'h':
+                uso();
+                exit(0);
             case '?':
                 cerr << "Erro ao ler os argumentos." << endl;
-                throw excecao_erro_ao_ler_argumentos{};
+                uso();
                 exit(1);
             default:
-                abort();
+                throw excecao_erro_ao_ler_argumentos{};
         }
     }
 
@@ -105,6 +122,10 @@ int main(int argc, char** argv) {
 
     args argumentos;
     parse_args(argumentos, argc, argv);
+
+    if (argc >= 3)
+        if (argv[1] == string("fecho")) 
+            argumentos.arquivo_entrada = argv[2];
 
     vetor<ponto> vetor_de_pontos;
 
