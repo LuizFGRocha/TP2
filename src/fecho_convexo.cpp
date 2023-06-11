@@ -2,7 +2,12 @@
 #include "sorting.h"
 
 fecho_convexo::fecho_convexo(vetor<ponto>& vetor) {
-    vetor_m = vetor;
+    vetor_m = varredura_de_graham(vetor, k_bucketsort);
+}
+
+fecho_convexo& fecho_convexo::operator=(vetor<ponto> vetor_pontos) {
+    vetor_m = vetor_pontos;
+    return *this;
 }
 
 void fecho_convexo::imprime() {
@@ -59,7 +64,7 @@ ponto x_minima(vetor<ponto>& Q) {
     return menor;
 }
 
-fecho_convexo varredura_de_graham(vetor<ponto> Q, int metodo_de_ordenacao) {
+vetor<ponto> varredura_de_graham(vetor<ponto> Q, int metodo_de_ordenacao) {
 
     // Passo 1
     ponto p0 = extrai_y_minima(Q); // p0 é identificado e removido de Q
@@ -127,7 +132,7 @@ fecho_convexo varredura_de_graham(vetor<ponto> Q, int metodo_de_ordenacao) {
     return S;
 }
 
-fecho_convexo marcha_de_jarvis(vetor<ponto> Q) {
+vetor<ponto> marcha_de_jarvis(vetor<ponto> Q) {
     vetor<ponto> fecho;
 
     ponto ponto_no_fecho = x_minima(Q);
