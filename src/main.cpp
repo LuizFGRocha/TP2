@@ -114,7 +114,11 @@ void le_de_arquivo_para_vetor(string arquivo, vetor<ponto>& vetor_entrada) {
         sstream_entrada >> coordenada_x;
         sstream_entrada >> coordenada_y;
 
-        vetor_entrada.push_back(ponto(stoi(coordenada_x), stoi(coordenada_y)));
+        try {
+            vetor_entrada.push_back(ponto(stoi(coordenada_x), stoi(coordenada_y)));
+        } catch (invalid_argument& e) {
+            cerr << "Uma linha contém um caractere inválido (não é espaço nem número). Essa linha foi ignorada." << endl;
+        } 
     }
 }
 
